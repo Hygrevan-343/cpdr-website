@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
+  <title>CDPR Project | A-4 </title>
+</head>
+
+<script>
+  window.addEventListener("load", () => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  
+    document.querySelectorAll(".nav__link").forEach(link => {
+      link.classList.remove("active");
+    });
+  });
+  
+  window.addEventListener("scroll", () => {
+    const sections = document.querySelectorAll(".content-section");
+    const navLinks = document.querySelectorAll(".nav__link");
+  
+    let currentSectionId = "";
+    const midpoint = window.scrollY + window.innerHeight / 2;
+  
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionId = section.getAttribute("id");
+  
+      if (midpoint >= sectionTop) {
+        currentSectionId = sectionId;
+      }
+    });
+  
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (currentSectionId && link.getAttribute("href").includes(currentSectionId)) {
+        link.classList.add("active");
+      }
+    });
+  });
+</script>
+
+
+<body>
+  <div class="l-navbar">
+    <nav class="nav">
+      <div>
+        <a href="#" class="nav__logo">
+          <img src="assets\icons\logo.png" alt="CDPR Logo" class="nav__logo-icon" />
+          <span class="nav__logo-text">CDPR</span>
+        </a>
+
+        <ul class="nav__list">
+          <li><a href="#abstract" class="nav__link"><i class='bx bx-file'></i><span class="nav__text">Abstract</span></a></li>
+          <li><a href="#introduction" class="nav__link"><i class='bx bx-book'></i><span class="nav__text">Introduction</span></a></li>
+          <li><a href="#literature" class="nav__link"><i class='bx bx-search-alt-2'></i><span class="nav__text">Literature Review</span></a></li>
+          <li><a href="#methodology" class="nav__link"><i class='bx bx-cog'></i><span class="nav__text">Methodology</span></a></li>
+          <li><a href="#results" class="nav__link"><i class='bx bx-bar-chart-alt'></i><span class="nav__text">Results</span></a></li>
+          <li><a href="#demo" class="nav__link"><i class='bx bx-video'></i><span class="nav__text">Demo</span></a></li>
+          <li><a href="#conclusion" class="nav__link"><i class='bx bx-check'></i><span class="nav__text">Conclusion</span></a></li>
+          <li><a href="#references" class="nav__link"><i class='bx bx-book-open'></i><span class="nav__text">References</span></a></li>
+          <li><a href="#team" class="nav__link"><i class='bx bx-group'></i><span class="nav__text">Our Team</span></a></li>
+
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <main class="main-container">
+    <div class="header-container">
+      <div class="header-box text-box">
+        22AIE214<br />Introduction to AI Robotics
+      </div>
+
+      <div class="header-box logo-box">
+        <img src="assets/icons/amrita_logo.svg" alt="Amrita Logo" class="amrita-logo">
+      </div>
+
+      <div class="header-box text-box">
+        22MAT230<br />Mathematics for Computing 4
+      </div>
+
+      <div class="cdpr-project-heading">
+        <h1>3 - DOF CABLE DRIVEN PARALLEL ROBOT</h1>
+      </div>
+
+    </div>
+
+
+
+    <div id="abstract" class="content-section">
+      <div class="section-title">Abstract</div>
+      <p>
+        In the recent past, suspended cable-driven parallel robots (CDPRs) have received significant attention because of their simple configuration, flexibility, wide range of operation, and cost-effectiveness in load handling and transportation in manufacturing, agriculture, and warehousing applications. This project introduces the planar 3-degree-of-freedom (3-DOF) CDPR prototype's design, development, and control system, including passive stabilization using tilt sensing and energy-based corrective maneuvers. The system involves a platform being suspended by four independently actuated cables attached to the vertices of a rectangular or cubical support. Platform manipulation is done through coordinated motion of four stepper motors using direction and pulse signals that enable it to be translated on the X, Y, and Z axes with no rotational motion.
+        <br><br>
+        One of the key aspects of this implementation is the fusion of a real-time feedback loop with the MPU6050 IMU sensor to track the platform's orientation within the space through roll and pitch of state. Passivity-based stabilization, are employed by the system to sense deviation or tilt greater than a predefined limit referred to as 'tilt-threshold' and initiate corresponding corrective action. The corrective algorithm dynamically controls cable tensions in time-controlled steps to drive the platform to equilibrium. The system is capable of autonomous stabilization, thus providing smooth and stable motion upon operation. Implementation of the inverse kinematics method is employed to make the base react appropriately to directional command, while the stabilization algorithm is executed in parallel to reduce tilt during motion. This synergy between directional command and stabilization makes the suspended platform balanced and safe throughout its path, thus avoiding oscillations or collisions. Additionally, a prototype incorporating collision detection with camera feedback supplemented with Kalman filter was developed, showing the possibility of obstacle detection in future developments of the system.
+        <br><br>
+        In summary, the project is a foundation for the creation of programmable, accessible CDPR systems with the potential to be utilized in dynamic environments. Future developments may include tension sensing, autonomous path planning, or higher-level control techniques like model predictive control (MPC) or adaptive learning-based methods for improved robustness and autonomy.
+      </p>
+    </div>
+
+
+    <div id="introduction" class="content-section">
+      <div class="section-title">Introduction</div>
+
+      <h3>Background of the Project</h3>
+      <p>
+        Cable-Driven Parallel Robots (CDPRs) are a new and general type of parallel robotic system that utilizes a cable network of tensioned cables connected to motorized winches for the positioning and orienting control of a suspended payload or platform. Compared to traditional rigid-link robots, CDPRs possess many unique benefits, such as light weight, economic efficiency, ability to access a wide workspace, and simple installation. All of these characteristics render CDPRs highly attractive to tasks with high mobility and wide operational reach without mechanical linkages complexity.
+        <br><br>
+        CDPRs, over time, have been used in many industries for a variety of applications, ranging from industrial automation (e.g., material handling overhead) to construction and structural inspection, agriculture (e.g., precision seeding and spraying), and live transmissions (e.g., spider cameras or skycams at sporting venues). That they can carry tools, sensors, or payloads to remote or hostile locations is a huge benefit in terms of flexibility and security. These schemes are traditionally implemented in highly structured and well-defined environments—such as that of indoor areas or industrial environments—where ambient disturbances and complex dynamic behavior are confined.
+        <br><br>
+        Stability, dynamic control, and moving the suspended base in a safe way are all among these issues. As the requirement placed on CDPRs increases in terms of autonomy and operational robustness, it is crucial to address the challenge associated with control and stability. Without effective mechanisms for instantaneous correction and adaptive navigation, the system can face issues like excessive tilt, oscillation, or collision risks, particularly during diagonal or sophisticated directional maneuvers. Hence, the development of intelligent control methodologies—integrated with sensor feedback such as Gyroscopic Sensors and Inertial Measurement Units (IMUs)—is crucial to ensure safe, reliable, and accurate performance in real-world applications.
+      </p>
+
+      <br>
+
+      <h3>Problem Statement</h3>
+      <p>
+        Traditional material handling systems and cable driven robotic platforms face several challenges in terms of stability, safety, and responsiveness. When operating in real-world environments, these systems are susceptible to tilt, and possess uncontrolled movement due to external disturbances like wind or imprecise cable control.
+        <br><br>
+        A key problem arises in ensuring the suspended base remains stable and within bounds while being maneuvered in all directions. Without active stabilization, any change in cable length or direction can result in abrupt or unsafe payload motion. Furthermore, manual operation without feedback control can exacerbate the issue, resulting in collisions, misalignment, or operational delays. This motivated the development of a system capable of precise autonomous control and active stabilization through real-time sensor feedback and motor coordination.
+      </p>
+
+      <br>
+
+      <h3>Scope of the Project</h3>
+      <p>
+        The primary focus of the design and development of this project is a suspended robotic system that combines a Cable-Driven Parallel Robot (CDPR) with a camera-equipped base and intelligent control mechanism. The system is developed as a working prototype that simulates real-world conditions and includes:
+      </p>
+      <ul class="scope-list">
+        <li>A suspended platform controlled by four stepper motors in a rectangular frame.</li>
+        <li>Autonomous stabilization using an MPU6050 gyroscopic sensor for tilt correction.</li>
+        <li>Directional platform movement through inverse kinematics and command input.</li>
+        <li>Real-time feedback control loop with energy-based correction logic.</li>
+        <li>Collision detection module using camera input and Kalman filtering (experimental).</li>
+      </ul>
+
+      <br>
+
+      <h3>Objectives of the Project</h3>
+      <p>
+        The primary goal of this project is to miniaturize a Cable-Driven Parallel Robot (CDPR) system through the use of a miniaturized prototype that can be used to demonstrate controlled suspended motion. The system is intended to offer real-time directional movement through the use of intuitive keyboard commands, enabling users to dictate the movement of the platform throughout the workspace. At the core of the project is the application of forward and inverse kinematics principles to determine and execute precise movement of the base upon user dictate. In addition, an Inertial Measurement Unit (IMU) is employed to monitor the orientation of the system and detect any tilt or instability during movement. Upon detection of such deviations, the system automatically triggers corrective motor adjustments to restore balance. Through this approach, the prototype not only replicates real-world CDPR dynamics but also showcases stable and secure payload transport, forming the basis for scalable applications across industries and autonomous environments. <br><br>
+      </p>
+
+    </div>
+
+
+    <div id="literature" class="content-section">
+      <div class="section-title">Literature Review</div>
+      <p>
+        In the field of Cable driven robots, there has been a significant research over the past few decades primarily focusing more on the challenges related to the system modeling, control and stabilization. These Robots, which manipulate payloads through tensioned cables attached to multiple motorized winches, have found applications in industrial automation and transportation. The literature highlights various approaches to model the system dynamics and design controllers that ensure safe and reliable operation.
+        <br><br>
+        <b>M. Lemmon in his lecture notes of EE580 course at the University of Notre Dame </b> on Passivity-Based Control provides a core insight into how energy-based notions are used to stabilize nonlinear systems. The control strategy relies on the shaping of the system energy to achieve the desired passivity and stability features, which is particularly useful in underactuated systems like CDPRs. His theoretical treatment forms the foundation for energy shaping and damping injection methods that may be used for suspended robotic platforms, particularly with disturbances and dynamic environments.
+        <br><br>
+        The Study by <b> M. R. J. Harandi, A. Molaei and H. D. Taghirad 2021 60th IEEE Conference on Decision and Control (CDC) </b> is an important contribution to the management of suspended Cable-Driven Parallel Robots (CDPR) using a regulation control strategy based on energy shaping, which is passivity theory-based. Their method reconfigures the energy of the system to direct it to desired stable states, enabling the robot to achieve smooth and controlled motion while simultaneously regulating cable tensions. Cable slack prevention is one of the key issues of concern in this work, something that can cause instability and loss of control, factors of utmost concern in the practical design of CDPRs. The outcomes, validated by both simulation and experimental research, proved the controller's capability to provide stability and robustness, even in dynamic conditions. The present work is directly applicable to our project since it provides a firm theoretical and practical foundation for the realization of real-time stabilization and control of the suspended base. The energy balancing, tension regulation, and passive stability concepts introduced in the paper have been crucial in designing the corrective motor logic in our prototype, particularly in the prevention of tilt and instability using IMU sensors feedback. Their work thus constitutes a basic building block in the creation of our system's control framework.
+        <br><br>
+        <b>Le, D. D., & Nguyen, T. T. (2022). Dynamic Modeling of a Cable Suspended Parallel Robot</b>, contribute further to this discussion by offering a comprehensive dynamic model for cable-suspended parallel robots. Their work focuses on the derivation of dynamic equations that take into account the mass distribution, cable elasticity, and inertial effects of the platform. This modeling effort provides a robust basis for simulating and predicting system behavior under various control inputs, which is critical for developing accurate kinematic and control algorithms for CDPR prototypes like the one developed in this project.
+      </p>
+    </div>
+
+
+
+    <div id="methodology" class="content-section">
+      <div class="section-title">Methodology</div>
+
+      <h3>System Architecture</h3>
+      <p>
+        The suspended robot system proposed is fundamentally a CDPR architecture with four cable winches powered by motors located at the square corners of a base frame. The motors control the tension and length of cables to provide accurate control of the position of the base platform in the X-Y-Z coordinate system. The base platform is a payload carrier and is also fitted with an IMU sensor to measure tilt and instability and a camera for object detection.
+        <br><br>
+        The architecture of the suspended robotic system is designed around a robust and modular setup to ensure stability, flexibility, and real-time control. The system consists of the following key components:
+      </p>
+
+      <div class="hardware-block">
+        <img src="assets\Nema17Motor.png" alt="NEMA 17 Motor">
+        <div>
+          <h4>NEMA 17 Stepper Motors</h4>
+          <p>
+            The system employs four NEMA 17 stepper motors for precise control of the cables. These motors drive the tension of the cables that hold the base of the robot and control its movement in the X, Y, and Z axes. The stepper motors ensure accuracy in positioning the platform through high-precision movements.
+          </p>
+        </div>
+      </div>
+
+      <div class="hardware-block">
+        <img src="assets\CncShield.jpg" alt="CNC Shield">
+        <div>
+          <h4>Motor Drivers & CNC Shield</h4>
+          <p>
+            Each stepper motor is driven by an A4988 motor driver, which is controlled by a CNC shield mounted on an Arduino Uno. The CNC shield provides an interface for multiple motor drivers and allows for coordinated control of all motors, facilitating real-time adjustments to the cable tensions.
+          </p>
+        </div>
+      </div>
+
+      <div class="hardware-block">
+        <img src="assets\MPU6050Sensor.png" alt="MPU6050 Sensor">
+        <div>
+          <h4>Inertial Measurement Sensor (IMU) - MPU 6050</h4>
+          <p>
+            To ensure stability and minimize tilt, the system incorporates the MPU 6050 Inertial Measurement Unit (IMU) sensor, which tracks the orientation and angular velocity of the base. The IMU data is crucial for real-time feedback and stabilization.
+          </p>
+        </div>
+      </div>
+
+      <div class="hardware-block">
+        <div class="hardware-images stacked">
+          <img src="assets\ArduinoUno.png" alt="Arduino Uno">
+          <img src="assets\ESP8266Module.png" alt="ESP8266 Module">
+        </div>
+        <div>
+          <h4>Micro-Controllers: Arduino Uno and ESP 8266 WiFi</h4>
+          <p>
+            The Arduino Uno acts as the central controller for motor and sensor management. It processes the inputs from the IMU sensor and sends control signals to the stepper motors based on the feedback received, enabling stabilization of the system. It also interfaces with the ESP8266 WiFi module to communicate with the Raspberry Pi.
+          </p>
+        </div>
+      </div>
+
+
+      <div class="hardware-block">
+        <img src="assets\RaspberryPiZero.png" alt="Raspberry Pi Zero">
+        <div>
+          <h4>Raspberry Pi Zero</h4>
+          <p>
+            The Raspberry Pi Zero acts as the intermediary for controlling the robotic claw. It communicates with the Arduino through WiFi and receives IMU data for stabilization. The Pi Zero is responsible for processing this data, ensuring that the robot’s base remains stable, and allows for control of the robotic claw in real-time through a web interface or custom application.
+          </p>
+        </div>
+      </div>
+
+      <div class="hardware-block">
+        <img src="assets\RoboticArm.jpg" alt="3D Printed Robotic Claw">
+        <div>
+          <h4>3D Printed Robotic Claw</h4>
+          <p>
+            The robotic claw, designed and 3D printed, is attached to the base of the system. It is controlled via the Raspberry Pi Zero, which sends commands to the claw to perform specific tasks, such as picking and placing objects, based on the system’s stability.
+          </p>
+        </div>
+      </div>
+
+      <br>
+
+      <h3>System Kinematics</h3>
+      <p>
+        Forward kinematics involves calculating the base's position in 3D space given the current lengths of the four cables. Since the lengths are controlled by stepper motors, each step corresponds to a discrete change in cable length. By analyzing the geometry between the anchor points of the cables (which are fixed at the four corners of the workspace) and the variable lengths of the cables, the position of the base can be computed in real time. This allows the system to estimate its current pose based solely on motor input.
+        <br><br>
+        In our system, the use of NEMA 17 stepper motors provides high precision in movement, as each motor’s step angle directly translates to a known length of cable retracted or released. By keeping track of the step count and knowing the mechanical characteristics of the motor (such as steps per revolution and spool circumference), we can accurately determine the change in cable length. This makes it possible to maintain precise control over the base position and facilitates consistent forward kinematic calculations essential for real-time motion tracking.
+        <br><br>
+        Inverse kinematics, on the other hand, is used to determine the required cable length changes (and thus the stepper motor movements) necessary to move the base to a desired position. When a directional input is given via keyboard control (e.g., move left, right, up, or down), the system calculates how much each motor needs to reel in or release its respective cable to achieve the desired translation without rotating or tilting the base. This process involves solving geometric equations under the constraint that all cables must remain taut and the motion must be smooth and stable.
+      </p>
+
+      <br>
+
+      <h3>Stabilization and Feedback Control</h3>
+      <p>
+        The cable-driven parallel robot (CDPR) mechanism, which is based on the suspended cable model, needs to sustain its motion stably despite the influence of disturbances, such as tilting, swaying, or fluctuation in the tension of the cables. When the payload moves in the workspace or the base experiences non-uniform forces due to inertia, acceleration, or object manipulation, the need for stabilization increases. To facilitate smooth and controlled operation, we implemented a feedback control system based on the passivity-based control theory (PBC) with the support of onboard sensor data obtained from an onboard inertial measurement unit (IMU).
+        <br><br>
+      </p>
+
+      <br>
+
+      <h3>Stabilization and Feedback Control</h3>
+      <p>
+        The cable-driven parallel robot (CDPR) mechanism, which is based on the suspended cable model, needs to sustain its motion stably despite the influence of disturbances, such as tilting, swaying, or fluctuation in the tension of the cables. When the payload moves in the workspace or the base experiences non-uniform forces due to inertia, acceleration, or object manipulation, the need for stabilization increases. To facilitate smooth and controlled operation, we implemented a feedback control system based on the passivity-based control theory (PBC) with the support of onboard sensor data obtained from an onboard inertial measurement unit (IMU).
+        <br><br>
+        Passivity-Based Control (PBC) is a nonlinear control theory founded on the physical principle of passivity, i.e., the ability of a passive system to neither generate energy independently but to be limited to energy storage or dissipation. PBC takes advantage of this by reconstructing the energy landscape of the system, i.e., its storage function, to enable natural movement towards a desired stable equilibrium. This is done by modifying the system dynamics so that any movement away from equilibrium causes a net dissipation of energy, effectively leading the system back to a stable state.
+        <br><br>
+        In Cable-Driven Parallel Robots (CDPRs), PBC finds particular application in controlling the position and orientation of the suspended platform. Through dynamic tension regulation of cables, the system can adjustably change the potential energy of the base, dampen oscillations, and impart stability, even under the presence of external disturbances or an asymmetrical payload distribution. Due to these reasons, PBC is an established robust and energy-efficient approach to achieving real-time stabilization in CDPR applications.
+      </p>
+
+      <div style="text-align: center; margin: 1.5rem 0;">
+        <img src="assets\Formula.webp" alt="Formula Ti ≥ 0, ∑Ti = mg" style="width: 230px; border: 2px solid black; padding: 0; margin: 0;">
+      </div>
+
+      <br>
+
+      <h3>Feedback Controller</h3>
+      <p>
+        In our system, the stabilization loop is enabled using an MPU6050 IMU sensor, which provides real-time readings of tilt angles (pitch and roll). These values are continuously monitored and compared to desired thresholds. When deviation is detected — such as when the platform tilts beyond a tolerable limit — a corrective control signal is generated.
+        <br><br>
+        By applying PBC, we reshape the system’s total energy function to include desired equilibrium points and use feedback to reduce energy deviations — effectively dampening out oscillations and correcting undesired motion. This method also allows the system to remain stable even in the presence of minor disturbances or measurement noise. Furthermore, because PBC aligns well with the natural dynamics of mechanical systems, it offers energy-efficient stabilization without requiring complex modeling or aggressive control strategies.
+      </p>
+
+      <br>
+
+      <h3>Object Detection Module - Kalman Filter</h3>
+      <p>
+        The Kalman filter serves as a mathematical framework for tracking and predicting the trajectory of both the end-effector and detected objects within the workspace. This recursive state estimation technique enables the system to anticipate potential collisions before they occur, significantly enhancing operational safety.
+        <br><br>
+        The Kalman filter implementation in our system operates on a simplified linear model that considers both position and velocity states. For each detected object and the end-effector, the filter maintains an internal state representation and updates this state through two main phases: prediction and correction.
+        <br><br>
+        During the prediction phase, the filter uses a motion model to estimate how the position and velocity of objects will evolve over time. This phase leverages previous state estimates and known dynamics to project the current state forward. The state transition incorporates a time step parameter that determines how far into the future the prediction extends.
+        <br><br>
+        The prediction capability is particularly valuable for our CDPR system as it allows for:
+
+      <ul class="scope-list">
+        <li>Anticipation of the future positions of moving objects in the workspace.</li>
+        <li>Estimation of the end-effector's trajectory during dynamic movements.</li>
+        <li>Calculation of time-to-collision metrics for proactive safety measures</li>
+        <li>Compensation for sensor latency and processing delays.</li>
+      </ul>
+      <br>
+      By utilizing these predictive capabilities, the system can issue warnings or initiate corrective actions before actual collisions occur, providing a critical safety buffer during operation. This is especially important when the CDPR is operating at higher speeds or when handling delicate payloads where collisions could cause significant damage.
+      </p>
+
+      <br>
+
+      <h3>Object Detection</h3>
+      <p>
+        The object detection component employs the YOLOv3-tiny (You Only Look Once) deep learning model to identify and localize objects within the camera's field of view in real-time. This model was selected for its optimal balance between detection accuracy and computational efficiency, making it suitable for the real-time requirements of our system.
+        <br><br>
+        The detection pipeline processes each frame captured by the camera through several coordinated stages:
+
+      <ul class="scope-list">
+        <li><b>End-effector Detection:</b> The system identifies the end-effector using color segmentation in the HSV color space. By applying carefully calibrated color thresholds optimized for the distinct red markers on the end-effector, the system can reliably track its position even during rapid movements or under varying lighting conditions.</li>
+        <li><b>Detection with YOLO:</b> Each frame undergoes preprocessing before being analyzed by the YOLO neural network. The network processes the entire image in a single pass and outputs information about detected objects, including their class (type), confidence score, and spatial coordinates within the frame.</li>
+        <li><b>Bounding Box Processing:</b> For each detected object, the system extracts bounding box coordinates, confidence scores, and class identifications. Only detections with confidence scores above a predetermined threshold (0.5) are considered valid, reducing false positives.</li>
+        <li><b>Non-Maximum Suppression:</b> To eliminate redundant detections of the same object, the system applies non-maximum suppression. This algorithm retains only the highest-confidence detection when multiple overlapping bounding boxes identify the same object.</li>
+        <li><b>Proximity Analysis:</b> The system calculates the Euclidean distance between the end-effector and each detected object's centroid. When this distance falls below a predefined proximity threshold (150 pixels), the system triggers an audio alert to warn of potential collision risk.</li>
+      </ul>
+
+      <br>
+      Additionally, the system monitors the proximity of the end-effector to the workspace boundaries. If the end-effector approaches within the edge threshold (50 pixels) of any workspace boundary, the system displays a visual warning and emits a distinct audio alert to prevent boundary collisions.
+      <br><br>
+      The integration of these components creates a comprehensive safety system that continuously monitors the workspace environment. The object detection module operates in a separate thread to ensure smooth performance without affecting the main control loop of the CDPR. This multithreaded architecture ensures that the vision system can operate at its full frame rate without introducing latency into the control system, which is crucial for timely collision detection and response.
+      <br><br>
+      By combining Kalman filtering with real-time object detection, our CDPR system achieves enhanced spatial awareness and safety capabilities. This integration represents a significant step toward autonomous operation and demonstrates the potential for advanced robotics applications in manufacturing, agriculture, and warehousing where safe interaction with the environment is paramount.
+      </p>
+
+      <br>
+
+      <h3>Simulation Environment</h3>
+      <p>
+        Simulation of CDPR was done with the help of the PyBullet rigid body dynamics and multi-body simulation physics engine. PyBullet offers a good platform on which to model mechanical systems to be simulated in a virtualized 3D space, and hence it comes in handy for simulating complex behavior of the robot's components, such as cable tensions, robot base position, as well as suspension system dynamics.In simulation, the configuration of the CDPR was described by a 3D Universal Robot Description Format (URDF) model. This included the robot base, which was modeled as a rigid body, and four anchor points at known locations in the 3D workspace. The anchor points denote the locations where the cables are fixed to the robot base. The simulations were also introduced with considerable natural drag force, gravity and cable stiffness.
+        <br><br>
+        In forward kinematics, the task is to calculate the new position of the robot’s base based on the tensions in the cables. Each cable exerts a force on the base, moving it in a specific direction. By knowing the cable tensions and the positions of the anchors, we compute the resulting position of the base. The movement is the sum of the effects of all the cable tensions, which are applied in different directions, depending on how much each cable is pulled. The forward kinematics equation computes the updated base position by considering the tensions in all the cables.
+
+      <div style="text-align: center; margin: 1.5rem 0;">
+        <img src="assets\Formula2.webp" alt="Formula 2" style="width: 450px; border: 2px solid black; padding: 0; margin: 0;">
+      </div>
+
+      The outcome of the simulation revealed that the base position and orientation of the robot could be controlled well through the regulation of cable tensions. The system could maintain stability under the specified constraints of the workspace, hence preventing the base from crossing the limits of the reachable space. Furthermore, the simulation offered important insight into how changes in cable tensions affect the behavior of the robot, for example, tilting and displacement.
+      <br><br>
+      Visualization tools embedded in PyBullet enabled continuous tracking of cable lengths and anchor positions, hence enabling an open presentation of the performance of the system during simulation.In general, the simulation with PyBullet provided a realistic and accurate model of the CDPR, and various control methods could be simulated and system performance could be verified under various conditions. The results from this simulation were crucial in emulating the physical system's behavior and were beneficial in the entire design and implementation of the CDPR.
+      <br><br>
+
+      <div style="text-align: center; margin: 1.5rem 0;">
+        <img src="assets\Sim1.webp" alt="Simulation 1" style="width: 450px; padding: 0; margin: 0;">
+      </div>
+
+      <div style="text-align: center; margin: 1.5rem 0;">
+        <img src="assets\Sim2.webp" alt="Simulation 2" style="width: 450px; padding: 0; margin: 0;">
+      </div>
+      </p>
+
+      <br>
+
+      <h3>Practical Implementation</h3>
+      <p>
+        The Practical implementation of our Cable-Driven Parallel Robot (CDPR) consisted of building essential hardware parts for providing accurate motion control and system rigidity. The project began by constructing a rectangular frame and attaching four NEMA 17 stepper motors at the bottom corners. Cords were routed through guiding hooks and securely attached to the base platform. Motors, which were powered by A4988 driver modules and controlled by an Arduino Uno, regulate the tension at every corner of the strings, allowing controlled motion of the base on the X, Y, and Z axes.
+        <br><br>
+        For operational stability, an MPU6050 inertial measurement unit was added, which provides real-time feedback regarding roll and pitch. The Arduino interprets this feedback to allow instantaneous changes to motor positions, hence ensuring the base level is kept constant. The Arduino and IMU exchange information using the I2C protocol through ESP8266 WiFi and Raspberry Pi Zero, and motor actuation is controlled by a timed pulse synchronized system.
+      </p>
+    </div>
+
+    <div id="results" class="content-section">
+      <div class="section-title">Results</div>
+
+      <div style="text-align: center; margin: 2rem 0;">
+        <img src="assets/cpdr-drawio.png" alt="3-DOF Cable-Driven Parallel Robot Diagram" style="width: 100%; max-width: 850px; border-radius: 8px; padding: 12px;">
+      </div>
+
+      <p>
+        The schematic above illustrates the layout and mechanical operation of the 3-DOF Cable-Driven Parallel Robot (CDPR). The system features a suspended platform tethered by four independently actuated cables, each connected to stepper motors positioned at the corners of a square workspace. These motors work in coordination to regulate cable tension and enable smooth translation of the platform along the X, Y, and Z axes.
+        <br><br>
+        Dotted lines in the schematic indicate the active cable paths, while the directional arrows highlight the system’s bidirectional movement capabilities. Centrally mounted on the platform is a payload unit that houses control electronics and the MPU6050 IMU sensor. The circular mark at the base denotes the rotational degrees of freedom tracked in pitch and roll, vital for stabilization.
+        <br><br>
+        This visual model was instrumental in helping the development team define spatial constraints, determine cable anchor points, and assess potential motor configurations. It also served as a reference during real-time testing to align physical outcomes with expected platform behavior under control algorithms.
+        <br<br>
+          The CDPR successfully achieved stable 3-DOF movement within the designated workspace. Manual control via keyboard input yielded smooth motion and responsiveness, with minimal jitter when timing delays were standardized.
+          <br><br>
+          The integration of a passivity-based control strategy significantly enhanced the system's ability to auto-correct tilt and maintain stability. During experimental runs, the following performance metrics were recorded:
+
+          <ul class="scope-list">
+            <li><b>Average tilt correction time:</b> ~1.2 seconds</li>
+            <li><b>Maximum tilt deviation without control:</b> 14°</li>
+            <li><b>Post-control stabilized deviation:</b> ±4°</li>
+          </ul>
+
+
+      </p>
+    </div>
+
+    <div id="demo" class="content-section">
+      <div class="section-title">Demo</div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;">
+
+        <!-- Video 1: CDPR -->
+        <div class="video-box">
+          <div class="video-container">
+            <video src="assets/Vid2.mp4" controls autoplay muted loop style="width: 100%; border-radius: 12px; box-shadow: 0 0 20px #F5A623;" onloadedmetadata="this.playbackRate = 2.0">
+            </video>
+          </div>
+          <p style="margin-top: 0.5rem; font-weight: 500; font-size: 1.2rem; color: #12192C;">CDPR</p>
+        </div>
+
+        <!-- Video 2: Object Collision Detection -->
+        <div class="video-box">
+          <div class="video-container">
+            <video src="assets/Vid1.mp4" controls autoplay muted loop style="width: 100%; border-radius: 12px; box-shadow: 0 0 20px #F5A623;">
+            </video>
+          </div>
+          <p style="margin-top: 0.5rem; font-weight: 500; font-size: 1.2rem; color: #12192C;">Object Collision Detection</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="conclusion" class="content-section">
+      <div class="section-title">Conclusion</div>
+      <p>
+        Our demonstration of the Cable-Driven Parallel Robot (CDPR) effectively demonstrates an economic, stable, and responsive machine for accurate base motion in a three-dimensional space using string-tension control. With the synergy of stepper motor actuation and real-time feedback obtained from an inertial measurement unit (IMU), the machine remains in balance and dynamic stability without the need for external tracking devices. The application of control theory concepts like feedback control and Passivity Based Control also helped in the smooth transition and reduction of tilt during motion thus providing stabilization. This research not only validates the practicability of such suspended systems for real-time use but also highlights the importance of embedded control in spatial manipulation efficiency.
+      </p>
+
+      <br>
+
+      <h3>Future Aspects</h3>
+      <p>
+        In the future, the system can be significantly enhanced by integrating vision-based feedback mechanisms using cameras and computer vision algorithms for accurate position tracking and autonomous navigation. This would allow the base to follow complex trajectories and interact intelligently with its surroundings. Additionally, implementing closed-loop tension control using inline force sensors on the strings could help monitor and maintain optimal cable tension in real-time, improving stability and safety. The addition of a lightweight robotic arm or gripper on the suspended base could enable the system to perform object manipulation tasks, making it suitable for use in areas like warehouse automation or precision agriculture. Finally, incorporating wireless communication modules such as Wi-Fi or Bluetooth could allow for remote control, real-time monitoring, and mobile interface integration, increasing its accessibility and usability in field applications.
+      </p>
+    </div>
+
+    <div id="references" class="content-section">
+      <div class="section-title">References</div>
+      <ul class="scope-list" style="list-style: none; padding-left: 0;">
+        <li><b>[1]</b> M. Lemmon, Passivity Based Control, EE580 Course, University of Notre Dame. [Online]. Available: https://www3.nd.edu/~lemmon/courses/ee580/lectures/chapter10.pdf. [Accessed: Mar. 11, 2025].</li> <br>
+        <li><b>[2]</b> M. R. J. Harandi, A. Molaei, and H. D. Taghirad, "Regulation Control of a Suspended Cable-Driven Robot via Energy Shaping," in Proc. 60th IEEE Conf. Decision and Control (CDC), Austin, TX, USA, 2021, pp. 1438–1443, doi: 10.1109/CDC45484.2021.9683022.</li> <br>
+        <li><b>[3]</b> Le, D. D., and Nguyen, T. T. (2022). Dynamic Modeling of a Cable Suspended Parallel Robot. International Journal of Mechanical Engineering and Robotics Research, 11(8), 639–645. https://doi.org/10.18178/ijmerr.11.8.639-645.</li>
+      </ul>
+    </div>
+
+    <div id="team" class="content-section">
+      <div class="section-title">Our Team - A4</div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
+        <div class="team-card">CB.SC.U4AIE23015<br><strong>Baranidharan S</strong></div>
+        <div class="team-card">CB.SC.U4AIE23050<br><strong>P U Hygrevan</strong></div>
+        <div class="team-card">CB.SC.U4AIE23054<br><strong>Pranav Rajeshkumar</strong></div>
+        <div class="team-card">CB.SC.U4AIE23062<br><strong>Sai Nivedh V</strong></div>
+        <div class="team-card">CB.SC.U4AIE23071<br><strong>Theerth Krish S</strong></div>
+      </div>
+    </div>
+
+  </main>
+</body>
+
+</html>
